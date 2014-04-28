@@ -28,6 +28,7 @@ gulp.task("jshint:html", function () {
     .pipe(extract({
       sel: "script, code.javascript"
     }))
+    .pipe(jshint())
     .pipe(jshint.reporter("default"))
     .pipe(jshint.reporter("fail"));
 });
