@@ -3,7 +3,8 @@
  */
 var fs = require("fs"),
   gulp = require("gulp"),
-  jshint = require("gulp-jshint");
+  jshint = require("gulp-jshint"),
+  mocha = require("gulp-mocha");
 
 // ----------------------------------------------------------------------------
 // Helpers
@@ -20,6 +21,7 @@ var _jshintCfg = function (name) {
 gulp.task("jshint", function () {
   gulp
     .src([
+      "test/**/*.js",
       "*.js"
     ])
     .pipe(jshint(_jshintCfg(".jshintrc.json")))
@@ -28,7 +30,20 @@ gulp.task("jshint", function () {
 });
 
 // ----------------------------------------------------------------------------
+// Mocha
+// ----------------------------------------------------------------------------
+gulp.task("mocha", function () {
+  gulp
+    .src([
+      "test/**/*.spec.js"
+    ])
+    .pipe(mocha({
+      reporter: "spec"
+    }));
+});
+
+// ----------------------------------------------------------------------------
 // Aggregated Tasks
 // ----------------------------------------------------------------------------
-gulp.task("check",      ["jshint"]);
+gulp.task("check",      ["jshint", "mocha"]);
 gulp.task("default",    ["check"]);

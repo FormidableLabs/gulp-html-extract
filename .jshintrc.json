@@ -6,6 +6,13 @@
   "maxlen"        : 80,
   "quotmark"      : "double", // Forces double quotes for strings
   "predef"        : [         // Extra globals.
+    // Test
+    "describe",
+    "it",
+    "before",
+    "beforeEach",
+    "after",
+    "afterEach"
   ],
 
   // == Enforcing Options ===============================================

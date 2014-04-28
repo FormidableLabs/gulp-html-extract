@@ -29,6 +29,8 @@
   },
   "devDependencies": {
     "gulp-jshint": "1.5.5",
-    "gulp": "3.6.2"
+    "gulp": "3.6.2",
+    "chai": "1.9.1",
+    "gulp-mocha": "0.4.1"
   }
 }
