@@ -32,7 +32,7 @@ gulp.task("jshint", function () {
 // ----------------------------------------------------------------------------
 // Mocha
 // ----------------------------------------------------------------------------
-gulp.task("mocha", function () {
+gulp.task("test", function () {
   gulp
     .src([
       "test/**/*.spec.js"
@@ -45,5 +45,5 @@ gulp.task("mocha", function () {
 // ----------------------------------------------------------------------------
 // Aggregated Tasks
 // ----------------------------------------------------------------------------
-gulp.task("check",      ["jshint", "mocha"]);
+gulp.task("check",      ["jshint", "test"]);
 gulp.task("default",    ["check"]);

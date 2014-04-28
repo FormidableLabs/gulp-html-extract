@@ -45,7 +45,7 @@ describe("html-extract", function () {
     stream
       .on("data", function (file) {
         count++;
-        expect(file.path.toString()).to.contain("-script");
+        expect(file.path).to.contain("-script");
         expect(file.contents.toString()).to.contain("var ");
       })
       .on("error", function (err) {
@@ -59,7 +59,49 @@ describe("html-extract", function () {
       .end(this.file);
   });
 
-  it.skip("should extract custom selectors", function () {
+  it("should extract custom selectors", function (done) {
+    var stream = extract({ sel: "textarea" }),
+      count = 0,
+      err;
 
+    stream
+      .on("data", function (file) {
+        count++;
+        expect(file.path).to.contain("-textarea");
+        expect(file.contents.toString()).to.contain("_TEXT");
+      })
+      .on("error", function (err) {
+        err = err;
+      })
+      .on("end", function () {
+        expect(err).to.not.be.ok;
+        expect(count).to.equal(2);
+        done(err);
+      })
+      .end(this.file);
+  });
+
+  it("should match id", function (done) {
+    var stream = extract({ sel: "#first-textarea" }),
+      count = 0,
+      err;
+
+    stream
+      .on("data", function (file) {
+        var text = file.contents.toString().replace(/^\s*|\s*$/g, "");
+
+        count++;
+        expect(file.path).to.contain("first-textarea");
+        expect(text).to.equal("FIRST_TEXT");
+      })
+      .on("error", function (err) {
+        err = err;
+      })
+      .on("end", function () {
+        expect(err).to.not.be.ok;
+        expect(count).to.equal(1);
+        done(err);
+      })
+      .end(this.file);
   });
 });
