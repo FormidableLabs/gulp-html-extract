@@ -1,7 +1,7 @@
 /**
  * Extract HTML text.
  */
-var jsdom = require("jsdom"),
+var cheerio = require("cheerio"),
   gutil = require("gulp-util"),
   PluginError = gutil.PluginError,
   through2 = require("through2"),
@@ -15,12 +15,13 @@ var jsdom = require("jsdom"),
  * @param {Object} opts     Options
  * @param {String} opts.sel Element selector [Default: `script`] (_optional_)
  */
-module.exports = function (opts) {
+module.exports = function(opts) {
   opts = opts || {};
   var sel = opts.sel || "script";
 
   var stream = through2.obj(function(file, enc, callback) {
     var self = this;
+    var contentExtracted;
 
     if (file.isStream()) {
       return stream.emit("error",
@@ -28,23 +29,16 @@ module.exports = function (opts) {
     }
 
     if (file.isBuffer()) {
-      jsdom.env({
-        html: file.contents.toString("utf8"),
-        done: function (errors, root) {
-          var els = root.document.querySelectorAll(sel);
-
-          // Emit fake "files" for each text snippet.
-          [].forEach.call(els, function (el, i) {
-            self.push(new gutil.File({
-              // Name: id or tag + index.
-              path: file.path + "-" + (el.id || el.tagName + "-" + i),
-              contents: new Buffer(el.textContent)
-            }));
-          });
-
-          callback();
-        }
+      contentExtracted = cheerio.load(file.contents.toString("utf8"));
+      var els = contentExtracted(sel);
+      [].forEach.call(els, function(el, i) {
+        self.push(new gutil.File({
+          // Name: id or tag + index.
+          path: file.path + "-" + (el.id || el.tagName + "-" + i),
+          contents: new Buffer(el.children[0].data)
+        }));
       });
+      callback();
     }
   });
 
