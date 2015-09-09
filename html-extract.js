@@ -34,7 +34,7 @@ module.exports = function(opts) {
       [].forEach.call(els, function(el, i) {
         self.push(new gutil.File({
           // Name: id or tag + index.
-          path: file.path + "-" + (el.id || el.tagName + "-" + i),
+          path: file.path + "-" + (el.attribs.id || el.tagName + "-" + i),
           contents: new Buffer(el.children[0].data)
         }));
       });
