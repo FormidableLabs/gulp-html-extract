@@ -22,6 +22,7 @@ module.exports = function(opts) {
   var stream = through2.obj(function(file, enc, callback) {
     var self = this;
     var contentExtracted;
+    var els;
 
     if (file.isStream()) {
       return stream.emit("error",
@@ -30,7 +31,7 @@ module.exports = function(opts) {
 
     if (file.isBuffer()) {
       contentExtracted = cheerio.load(file.contents.toString("utf8"));
-      var els = contentExtracted(sel);
+      els = contentExtracted(sel);
       [].forEach.call(els, function(el, i) {
         self.push(new gutil.File({
           // Name: id or tag + index.
