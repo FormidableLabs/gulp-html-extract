@@ -4,7 +4,7 @@
   "description": "Extract HTML text in your gulp pipeline.",
   "main": "html-extract.js",
   "scripts": {
-    "test": "./node_modules/.bin/gulp check"
+    "test": "gulp check"
   },
   "repository": {
     "type": "git",
