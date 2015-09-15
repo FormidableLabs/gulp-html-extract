@@ -1,18 +1,19 @@
 var fs = require("fs"),
+  path = require("path"),
 
   chai = require("chai"),
   expect = chai.expect,
 
   gutil = require("gulp-util"),
   extract = require("../html-extract"),
-  html = fs.readFileSync(__dirname + "/test.html", "utf8");
+  html = fs.readFileSync(path.join(__dirname, "test.html"), "utf8");
 
 describe("html-extract", function () {
 
   beforeEach(function () {
     // Fake file.
     this.file = new gutil.File({
-      path: "./test/test.html",
+      path: "test/test.html",
       contents: new Buffer(html)
     });
   });
