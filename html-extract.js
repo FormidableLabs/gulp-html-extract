@@ -15,14 +15,18 @@ var cheerio = require("cheerio"),
  * @param {Object} opts     Options
  * @param {String} opts.sel Element selector [Default: `script`] (_optional_)
  */
-module.exports = function(opts) {
+module.exports = function (opts) {
   opts = opts || {};
   var sel = opts.sel || "script";
 
-  var stream = through2.obj(function(file, enc, callback) {
+  var stream = through2.obj(function (file, enc, callback) {
     var self = this;
     var contentExtracted;
     var els;
+
+    function hasChildren(el) {
+      return el.children.length > 0;
+    }
 
     if (file.isStream()) {
       return stream.emit("error",
@@ -32,12 +36,14 @@ module.exports = function(opts) {
     if (file.isBuffer()) {
       contentExtracted = cheerio.load(file.contents.toString("utf8"));
       els = contentExtracted(sel);
-      [].forEach.call(els, function(el, i) {
-        self.push(new gutil.File({
-          // Name: id or tag + index.
-          path: file.path + "-" + (el.attribs.id || el.tagName + "-" + i),
-          contents: new Buffer(el.children[0].data)
-        }));
+      [].forEach.call(els, function (el, i) {
+        if (hasChildren(el)) {
+          self.push(new gutil.File({
+            // Name: id or tag + index.
+            path: file.path + "-" + (el.attribs.id || el.tagName + "-" + i),
+            contents: new Buffer(el.children[0].data)
+          }));
+        }
       });
       callback();
     }
