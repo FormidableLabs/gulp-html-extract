@@ -54,7 +54,7 @@ describe("html-extract", function () {
       })
       .on("end", function () {
         expect(err).to.not.be.ok;
-        expect(count).to.equal(2);
+        expect(count).to.equal(3);
         done(err);
       })
       .end(this.file);
