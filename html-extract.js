@@ -5,6 +5,7 @@ var cheerio = require("cheerio"),
   gutil = require("gulp-util"),
   PluginError = gutil.PluginError,
   through2 = require("through2"),
+  trim = require("trim"),
   PLUGIN_NAME = "html-text";
 
 /**
@@ -41,7 +42,7 @@ module.exports = function (opts) {
           self.push(new gutil.File({
             // Name: id or tag + index.
             path: file.path + "-" + (el.attribs.id || el.tagName + "-" + i),
-            contents: new Buffer(el.children[0].data)
+            contents: new Buffer(trim.left(el.children[0].data))
           }));
         }
       });

@@ -25,7 +25,8 @@
   "dependencies": {
     "cheerio": "^0.19.0",
     "gulp-util": "2.2.14",
-    "through2": "0.4.1"
+    "through2": "0.4.1",
+    "trim": "0.0.1"
   },
   "devDependencies": {
     "gulp-jshint": "1.5.5",
