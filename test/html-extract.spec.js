@@ -11,20 +11,20 @@ var count;
 var err;
 
 // Helpers
-var expectEmpty = function (opts, file, done) {
+var expectEmpty = function (opts, target, done) {
   extract(opts || {})
     .on("data", function () {
       count++;
     })
-    .on("error", function (err) {
-      err = err;
+    .on("error", function (error) {
+      err = error;
     })
     .on("end", function () {
       expect(err).to.not.be.ok;
       expect(count).to.equal(0);
       done(err);
     })
-    .end(file);
+    .end(target);
 };
 
 describe("html-extract", function () {
@@ -71,13 +71,13 @@ describe("html-extract", function () {
 
     it("extracts scripts by default", function (done) {
       extract()
-        .on("data", function (file) {
+        .on("data", function (target) {
           count++;
-          expect(file.path).to.contain("-script");
-          expect(file.contents.toString()).to.contain("var ");
+          expect(target.path).to.contain("-script");
+          expect(target.contents.toString()).to.contain("var ");
         })
-        .on("error", function (err) {
-          err = err;
+        .on("error", function (error) {
+          err = error;
         })
         .on("end", function () {
           expect(err).to.not.be.ok;
@@ -96,8 +96,8 @@ describe("html-extract", function () {
         .on("data", function () {
           count++;
         })
-        .on("error", function (err) {
-          err = err;
+        .on("error", function (error) {
+          err = error;
         })
         .on("end", function () {
           expect(err).to.not.be.ok;
@@ -110,13 +110,13 @@ describe("html-extract", function () {
 
     it("extracts custom selectors", function (done) {
       extract({ sel: "textarea" })
-        .on("data", function (file) {
+        .on("data", function (target) {
           count++;
-          expect(file.path).to.contain("-textarea");
-          expect(file.contents.toString()).to.contain("_TEXT");
+          expect(target.path).to.contain("-textarea");
+          expect(target.contents.toString()).to.contain("_TEXT");
         })
-        .on("error", function (err) {
-          err = err;
+        .on("error", function (error) {
+          err = error;
         })
         .on("end", function () {
           expect(err).to.not.be.ok;
@@ -128,15 +128,15 @@ describe("html-extract", function () {
 
     it("matches id", function (done) {
       extract({ sel: "#first-textarea" })
-        .on("data", function (file) {
-          var text = file.contents.toString().replace(/^\s*|\s*$/g, "");
+        .on("data", function (target) {
+          var text = target.contents.toString().replace(/^\s*|\s*$/g, "");
 
           count++;
-          expect(file.path).to.contain("first-textarea");
+          expect(target.path).to.contain("first-textarea");
           expect(text).to.equal("FIRST_TEXT");
         })
-        .on("error", function (err) {
-          err = err;
+        .on("error", function (error) {
+          err = error;
         })
         .on("end", function () {
           expect(err).to.not.be.ok;
@@ -178,11 +178,11 @@ describe("html-extract", function () {
 
     it("strips to indented level", function (done) {
       extract({ sel: "#indented-script", strip: true })
-        .on("data", function (file) {
-          var text = file.contents.toString();
+        .on("data", function (target) {
+          var text = target.contents.toString();
 
           count++;
-          expect(file.path).to.contain("indented-script");
+          expect(target.path).to.contain("indented-script");
           expect(text).to.equal([
             "var second = \"second\";",
             "if (first && second) {",
@@ -192,8 +192,8 @@ describe("html-extract", function () {
             "}"
           ].join("\n"));
         })
-        .on("error", function (err) {
-          err = err;
+        .on("error", function (error) {
+          err = error;
         })
         .on("end", function () {
           expect(err).to.not.be.ok;
