@@ -1,3 +1,4 @@
+var EOL = require("os").EOL;
 var fs = require("fs");
 var path = require("path");
 var expect = require("chai").expect;
@@ -190,7 +191,7 @@ describe("html-extract", function () {
             "  // Completely empty line next",
             "",
             "}"
-          ].join("\n"));
+          ].join(EOL));
         })
         .on("error", function (error) {
           err = error;
