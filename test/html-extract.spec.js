@@ -177,7 +177,27 @@ describe("html-extract", function () {
       expectEmpty({ strip: true }, file, done);
     });
 
-    it("strips to indented level", function (done) {
+    it("strips single line snippets", function (done) {
+      extract({ sel: "#first-script", strip: true })
+        .on("data", function (target) {
+          var text = target.contents.toString();
+
+          count++;
+          expect(target.path).to.contain("first-script");
+          expect(text).to.equal("var first = \"first\";" + EOL);
+        })
+        .on("error", function (error) {
+          err = error;
+        })
+        .on("end", function () {
+          expect(err).to.not.be.ok;
+          expect(count).to.equal(1);
+          done(err);
+        })
+        .end(file);
+    });
+
+    it("strips multiple line snippets", function (done) {
       extract({ sel: "#indented-script", strip: true })
         .on("data", function (target) {
           var text = target.contents.toString();
@@ -190,7 +210,8 @@ describe("html-extract", function () {
             "  var third = \"third\";",
             "  // Completely empty line next",
             "",
-            "}"
+            "}",
+            ""
           ].join(EOL));
         })
         .on("error", function (error) {

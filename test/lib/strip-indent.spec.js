@@ -17,10 +17,10 @@ describe("lib/strip-indent", function () {
   });
 
   it("should strip single lines", function () {
-    expect(strip("var foo;")).to.equal("var foo;");
-    expect(strip(" var foo;")).to.equal("var foo;");
-    expect(strip("\tvar foo;")).to.equal("var foo;");
-    expect(strip(" \t \t\t" + EOL + "var foo;")).to.equal("var foo;");
+    expect(strip("var foo;")).to.equal("var foo;" + EOL);
+    expect(strip(" var foo;")).to.equal("var foo;" + EOL);
+    expect(strip("\tvar foo;")).to.equal("var foo;" + EOL);
+    expect(strip(" \t \t\t" + EOL + "var foo;")).to.equal("var foo;" + EOL);
   });
 
   it("should strip to indented multiple lines with spaces", function () {
@@ -29,7 +29,8 @@ describe("lib/strip-indent", function () {
       "var bar = 42;"
     ].join(EOL))).to.equal([
       "var foo;",
-      "var bar = 42;"
+      "var bar = 42;",
+      ""
     ].join(EOL));
 
     expect(strip([
@@ -37,7 +38,8 @@ describe("lib/strip-indent", function () {
       "  var bar = 42;"
     ].join(EOL))).to.equal([
       "var foo;",
-      "var bar = 42;"
+      "var bar = 42;",
+      ""
     ].join(EOL));
 
     expect(strip([
@@ -49,7 +51,8 @@ describe("lib/strip-indent", function () {
       "var foo;",
       "if (foo) {",
       "  bar = 43;",
-      "}"
+      "}",
+      ""
     ].join(EOL));
 
     expect(strip([
@@ -65,7 +68,8 @@ describe("lib/strip-indent", function () {
       "  bar = 43;",
       "",
       "",
-      "}"
+      "}",
+      ""
     ].join(EOL));
   });
 
@@ -75,7 +79,8 @@ describe("lib/strip-indent", function () {
       "\t\tvar bar = 42;"
     ].join(EOL))).to.equal([
       "var foo;",
-      "var bar = 42;"
+      "var bar = 42;",
+      ""
     ].join(EOL));
   });
 
@@ -89,7 +94,8 @@ describe("lib/strip-indent", function () {
       "var foo;",
       "if (foo) {\t",
       "  bar = 43;  ",
-      "}"
+      "}",
+      ""
     ].join(EOL));
   });
 
@@ -108,7 +114,8 @@ describe("lib/strip-indent", function () {
       "var foo;",
       "if (foo) {",
       "  bar = 43;",
-      "}"
+      "}",
+      ""
     ].join(EOL));
   });
 
@@ -126,7 +133,8 @@ describe("lib/strip-indent", function () {
       "var foo;",
       "if (foo) {",
       "  bar = 43;",
-      "}"
+      "}",
+      ""
     ].join(EOL));
   });
 
