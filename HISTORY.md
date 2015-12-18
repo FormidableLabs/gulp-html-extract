@@ -1,6 +1,11 @@
 History
 =======
 
+## 0.1.0
+
+* Strip starting / ending newlines. Indent to level of first non-whitespace
+  character encountered. (Idea courtesy of *[@robdodson][]*)
+
 ## 0.0.3
 
 * Handle matched elements with no children. (*[@felixzapata][]*)
@@ -14,4 +19,5 @@ History
 * Initial release.
 
 [@felixzapata]: https://github.com/felixzapata
+[@robdodson]: https://github.com/robdodson
 [@ryan-roemer]: https://github.com/ryan-roemer
