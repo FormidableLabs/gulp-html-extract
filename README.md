@@ -54,3 +54,8 @@ path/to/file2.html-my-identifier
 #### opts.sel
 
 CSS selector string to match on. Default: `script`.
+
+#### opts.strip
+
+Strip to indented level of first non-whitespace character. Removes whitespace-
+only starting and ending lines around real text. Default: `false`

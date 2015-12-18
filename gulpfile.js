@@ -1,10 +1,10 @@
 /**
  * Gulp file.
  */
-var fs = require("fs"),
-  gulp = require("gulp"),
-  jshint = require("gulp-jshint"),
-  mocha = require("gulp-mocha");
+var fs = require("fs");
+var gulp = require("gulp");
+var jshint = require("gulp-jshint");
+var mocha = require("gulp-mocha");
 
 // ----------------------------------------------------------------------------
 // Helpers
