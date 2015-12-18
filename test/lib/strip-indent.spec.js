@@ -13,14 +13,14 @@ describe("lib/strip-indent", function () {
   it("should strip whitespace only to empty string", function () {
     expect(strip(" ")).to.equal("");
     expect(strip(" \t")).to.equal("");
-    expect(strip(" \t \t\t\n")).to.equal("");
+    expect(strip(" \t \t\t" + EOL)).to.equal("");
   });
 
   it("should strip single lines", function () {
     expect(strip("var foo;")).to.equal("var foo;");
     expect(strip(" var foo;")).to.equal("var foo;");
     expect(strip("\tvar foo;")).to.equal("var foo;");
-    expect(strip(" \t \t\t\nvar foo;")).to.equal("var foo;");
+    expect(strip(" \t \t\t" + EOL + "var foo;")).to.equal("var foo;");
   });
 
   it("should strip to indented multiple lines with spaces", function () {
