@@ -4,7 +4,11 @@
   "description": "Extract HTML text in your gulp pipeline.",
   "main": "html-extract.js",
   "scripts": {
-    "test": "gulp check"
+    "lint-source": "eslint -c .eslintrc-source *.js lib",
+    "lint-test": "eslint -c .eslintrc-test test",
+    "lint": "npm run lint-source && npm run lint-test",
+    "test-mocha": "mocha --recursive",
+    "test": "npm run lint && npm run test-mocha"
   },
   "repository": {
     "type": "git",
@@ -28,9 +32,10 @@
     "through2": "0.4.1"
   },
   "devDependencies": {
-    "gulp-jshint": "1.5.5",
-    "gulp": "3.6.2",
     "chai": "1.9.1",
-    "gulp-mocha": "0.4.1"
+    "eslint": "^1.10.3",
+    "eslint-config-defaults": "^7.1.1",
+    "eslint-plugin-filenames": "^0.2.0",
+    "mocha": "^2.3.4"
   }
 }
