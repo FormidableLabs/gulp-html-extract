@@ -18,12 +18,14 @@ var PLUGIN_NAME = "html-text";
  * @param {Object} opts       Options
  * @param {String} opts.sel   Element selector [Default: `script`]
  * @param {String} opts.strip Strip to indent level [Default: `false`]
+ * @param {String} opts.pad   Pad text to start line in source file [Default: `false`]
  * @returns {void}
  */
 module.exports = function (opts) {
   opts = opts || {};
   var sel = opts.sel || "script";
   var strip = !!opts.strip;
+  var pad = !!opts.pad;
 
   var stream = through2.obj(function (file, enc, callback) {
     /*eslint-disable no-invalid-this*/
@@ -35,8 +37,12 @@ module.exports = function (opts) {
         new PluginError(PLUGIN_NAME, "Streams are not supported!"));
     }
 
+    var fileContent = file.contents.toString("utf8");
+
     if (file.isBuffer()) {
-      var contentExtracted = cheerio.load(file.contents.toString("utf8"));
+      var contentExtracted = cheerio.load(fileContent, {
+        withStartIndices: true
+      });
       var els = contentExtracted(sel);
 
       [].forEach.call(els, function (el, i) {
@@ -47,6 +53,15 @@ module.exports = function (opts) {
           // Strip to indentation of first real line if specified
           if (strip) {
             data = stripIndent(data);
+          }
+
+          // Pad the file content with the corresponding top empty lines if specified
+          if (pad) {
+            var topText = fileContent.slice(0, el.startIndex + 1);
+            var numTopLines = (topText.match(/\r?\n/g) || []).length;
+            var emptyTopLines = new Array(numTopLines).join("\n");
+
+            data = emptyTopLines + data;
           }
 
           self.push(new gutil.File({
