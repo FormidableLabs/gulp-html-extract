@@ -57,8 +57,8 @@ module.exports = function (opts) {
 
           // Pad the file content with the corresponding top empty lines if specified
           if (pad) {
-            var topText = fileContent.slice(0, el.startIndex + 1);
-            var numTopLines = (topText.match(/\r?\n/g) || []).length;
+            var topText = fileContent.slice(0, el.startIndex);
+            var numTopLines = (topText.match(/\r?\n/g) || []).length + 1;
             var emptyTopLines = new Array(numTopLines).join("\n");
 
             data = emptyTopLines + data;
