@@ -59,3 +59,9 @@ CSS selector string to match on. Default: `script`.
 
 Strip to indented level of first non-whitespace character. Removes whitespace-
 only starting and ending lines around real text. Default: `false`
+
+#### opts.pad
+
+Pad text with newlines to start line in source file. Useful if line numbering
+of original source file is important (for eslint, stack traces, etc.).
+Default: `false`
