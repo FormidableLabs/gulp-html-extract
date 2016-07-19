@@ -226,4 +226,39 @@ describe("html-extract", function () {
     });
 
   });
+
+  describe("pad option", function () {
+
+    it("handles an empty string", function (done) {
+      file = new gutil.File({
+        path: "test/test.html",
+        contents: new Buffer("")
+      });
+
+      expectEmpty({ pad: true }, file, done);
+    });
+
+    it("adds newline padding", function (done) {
+      extract({ sel: "#first-script", strip: true, pad: true })
+        .on("data", function (target) {
+          var text = target.contents.toString();
+
+          count++;
+          expect(target.path).to.contain("first-script");
+          expect(text).to.equal(
+            new Array(5).join("\n") + // script start is L6
+            "var first = \"first\";" + EOL);
+        })
+        .on("error", function (error) {
+          err = error;
+        })
+        .on("end", function () {
+          expect(err).to.not.be.ok;
+          expect(count).to.equal(1);
+          done(err);
+        })
+        .end(file);
+    });
+
+  });
 });

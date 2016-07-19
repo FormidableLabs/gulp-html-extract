@@ -1,6 +1,11 @@
 History
 =======
 
+## Unreleased
+
+* Add `pad` option to add newlines to snippets so that line numbers in snippets
+  match original source. (*[@ibc][]*)
+
 ## 0.1.0
 
 * Strip starting / ending newlines. Indent to level of first non-whitespace
@@ -19,5 +24,6 @@ History
 * Initial release.
 
 [@felixzapata]: https://github.com/felixzapata
+[@ibc]: https://github.com/ibc
 [@robdodson]: https://github.com/robdodson
 [@ryan-roemer]: https://github.com/ryan-roemer
