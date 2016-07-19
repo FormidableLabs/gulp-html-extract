@@ -1,7 +1,7 @@
 History
 =======
 
-## Unreleased
+## 0.2.0
 
 * Add `pad` option to add newlines to snippets so that line numbers in snippets
   match original source. (*[@ibc][]*)
