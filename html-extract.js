@@ -37,7 +37,9 @@ module.exports = function (opts) {
         new PluginError(PLUGIN_NAME, "Streams are not supported!"));
     }
 
-    var fileContent = file.contents.toString("utf8");
+    // Deleted files may have no content.
+    // See: https://github.com/FormidableLabs/gulp-html-extract/issues/11
+    var fileContent = (file.contents || "").toString("utf8");
 
     if (file.isBuffer()) {
       var contentExtracted = cheerio.load(fileContent, {
@@ -71,9 +73,9 @@ module.exports = function (opts) {
           }));
         }
       });
-
-      return callback();
     }
+
+    return callback();
   });
 
   return stream;
