@@ -1,6 +1,11 @@
 History
 =======
 
+## 0.3.0
+
+* Handle deleted files and empty file contents.
+  [#12](https://github.com/FormidableLabs/gulp-html-extract/pull/12)
+
 ## 0.2.0
 
 * Add `pad` option to add newlines to snippets so that line numbers in snippets

@@ -1,6 +1,6 @@
 {
   "name": "gulp-html-extract",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Extract HTML text in your gulp pipeline.",
   "main": "html-extract.js",
   "scripts": {
