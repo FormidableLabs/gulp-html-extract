@@ -70,6 +70,15 @@ describe("html-extract", function () {
       expectEmpty({}, file, done);
     });
 
+    // https://github.com/FormidableLabs/gulp-html-extract/issues/11
+    it("handles no contents", function (done) {
+      file = new gutil.File({
+        path: "test/test.html"
+      });
+
+      expectEmpty({}, file, done);
+    });
+
     it("extracts scripts by default", function (done) {
       extract()
         .on("data", function (target) {
